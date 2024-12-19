@@ -2,7 +2,7 @@ from draw_library import *
 from star import Star
 import random
 
-INITIAL_STARS = int(WINDOW_HEIGHT / 20)
+INITIAL_STARS = int(WINDOW_HEIGHT / 10)
 
 class Starscape:
     def __init__(self):

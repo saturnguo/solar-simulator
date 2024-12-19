@@ -70,15 +70,15 @@ def main():
         create_new_planet()
         MOUSE_PRESS = False
 
-sun = Body("sun", 1.98892e30, 0, 0, 0, 0, 24, 255, 255, 0)
-mercury = Body("mercury", 0.33e24, -57.9e9, 0, 0, 47890, 4, 89, 35, 25)
+sun = Body("sun", 1.98892e30, 0, 0, 0, 0, 32, 255, 255, 0)
+mercury = Body("mercury", 0.33e24, -64.9e9, 0, 0, 47890, 4, 89, 35, 25)
 venus = Body("venus", 4.87e24, -108.2e9, 0, 0, 35040, 5.5, 0, 255, 0)
 earth = Body("earth", 5.97e24, -149.6e9, 0, 0, 29790, 6, 0, 0, 255)
 mars = Body("mars", 0.642e24, -227.9e9, 0, 0, 24140, 4, 255, 0, 0)
-jupiter = Body("jupiter", 1898e24, -778.5e9, 0, 0, 13140, 9, 255, 255, 0)
-saturn = Body("saturn", 568e24, -1432.0e9, 0, 0, 9710, 7, 255, 100, 100)
-uranus = Body("uranus", 86.8e24, -2867.0e9, 0, 0, 6840, 7, 183, 201, 226)
-neptune = Body("neptune", 102e24, -4515.0e9, 0, 0, 5410, 6, 0, 0, 230)
+jupiter = Body("jupiter", 1898e24, -778.5e9, 0, 0, 13140, 12, 150, 75, 20)
+saturn = Body("saturn", 568e24, -1432.0e9, 0, 0, 9710, 11, 255, 100, 100)
+uranus = Body("uranus", 86.8e24, -2867.0e9, 0, 0, 6840, 11, 183, 201, 226)
+neptune = Body("neptune", 102e24, -4515.0e9, 0, 0, 5410, 10.5, 0, 0, 230)
 
 planet_list = [sun, mercury, venus, earth, mars, 
                jupiter, saturn, uranus, neptune]
