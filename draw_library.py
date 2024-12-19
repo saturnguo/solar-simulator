@@ -41,10 +41,8 @@ class GraphicsWindow(QGraphicsView):
         for i in self.list_of_circles:
             i.draw()
 
-        self.scene.clear()
-        self.list_of_circles = []
-        self.main()
         self.update()
+        self.main()
 
     def set_fill(self, red, green, blue):
         self.r = int(red)
@@ -71,14 +69,26 @@ class GraphicsWindow(QGraphicsView):
 
         self.scene.addItem(rect)
 
-    def draw_circle(self, x, y, radius):
-        new_object = Circle(x, y, radius)
-        new_object.ellipse.setBrush(self.brush)
-        new_object.ellipse.setPen(self.pen)
-            
-        new_object.draw()
-        self.list_of_circles.append(new_object)
-        self.scene.addItem(new_object.ellipse)
+    def draw_circle(self, name, x, y, radius):
+        existing_circle = next((c for c in self.list_of_circles if c.name == name), None)
+        
+        if existing_circle:
+            existing_circle.x = x
+            existing_circle.y = y
+            existing_circle.radius = radius
+
+            existing_circle.ellipse.setRect(0, 0, existing_circle.diameter, existing_circle.diameter)
+            existing_circle.ellipse.setPos(x - radius, y - radius)
+
+        if not existing_circle:
+            new_object = Circle(x, y, radius, name)
+
+            new_object.ellipse.setBrush(self.brush)
+            new_object.ellipse.setPen(self.pen)
+
+            self.list_of_circles.append(new_object)
+            self.scene.addItem(new_object.ellipse)
+            new_object.draw()
 
     def mousePressEvent(self, event: QMouseEvent):
         self.mx = event.x()
@@ -94,11 +104,12 @@ class GraphicsWindow(QGraphicsView):
         self.mouse_release()
 
 class Circle:
-    def __init__(self, x, y, radius):
+    def __init__(self, x, y, radius, name):
         self.x = x
         self.y = y
         self.radius = radius
-        self.diameter = radius * 2
+        self.diameter = self.radius * 2
+        self.name = name
         self.ellipse = QGraphicsEllipseItem(0, 0, self.diameter, self.diameter)
 
     def draw(self):
@@ -114,8 +125,8 @@ def set_fill(r, g, b):
 def set_line(r, g, b):
     graphic_window.set_line(r, g, b)
 
-def draw_circle(x, y, r):
-    graphic_window.draw_circle(x, y, r)
+def draw_circle(name, x, y, r):
+    graphic_window.draw_circle(name, x, y, r)
 
 def mouse_press():
     if graphic_window.mouse_pressed:
@@ -132,5 +143,7 @@ def start_graphics(main, width, height, framerate, mouse_press, mouse_release):
 
     graphic_window = GraphicsWindow(main, width, height, framerate, 
                                     mouse_press, mouse_release)
+    
+    set_background()
     graphic_window.draw()
 

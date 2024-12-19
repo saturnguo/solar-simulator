@@ -1,8 +1,9 @@
 from draw_library import *
 
 class Body:
-    def __init__(self, mass, x, y, v_x, v_y,
+    def __init__(self, name, mass, x, y, v_x, v_y,
                  pixel_radius, r, g, b):
+        self.name = name
         self.mass = mass
         self.x = x
         self.y = y
@@ -12,10 +13,6 @@ class Body:
         self.r = r
         self.g = g
         self.b = b
-
-    def grow_larger(self):
-        self.mass = self.mass * 1.25
-        self.pixel_radius = self.pixel_radius + .1
 
     def update_position(self, timestep):
         self.x = self.x + (self.v_x * timestep)
@@ -31,4 +28,4 @@ class Body:
         x_position = cx + (self.x * pixels_per_meter)
         y_position = cy + (self.y * pixels_per_meter)
 
-        draw_circle(x_position, y_position, self.pixel_radius)
+        draw_circle(self.name, x_position, y_position, self.pixel_radius)
