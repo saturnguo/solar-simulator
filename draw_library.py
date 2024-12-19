@@ -1,11 +1,21 @@
 import sys
+from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QTimer
 from PyQt5.QtGui import QBrush, QPen, QColor, QPainter, QMouseEvent
 from PyQt5.QtWidgets import (QGraphicsScene, QGraphicsView, QApplication, 
                              QGraphicsEllipseItem, QGraphicsRectItem, QGraphicsView)
 
+WINDOW_WIDTH = 7000
+WINDOW_HEIGHT = 7000
 
-class GraphicsWindow(QGraphicsView):
+class Background(QtWidgets.QWidget):
+    def paintEvent(self, event):
+        qp = QtGui.QPainter(self)
+        pen = QPen(QColor(0, 0, 0, 255))
+        qp.setPen(pen)
+        qp.drawRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)
+
+class GraphicsWindow(QtWidgets.QMainWindow):
     def __init__(self, main, x, y, framerate, mouse_press, mouse_release):
         super().__init__()
         self.main = main
@@ -14,25 +24,55 @@ class GraphicsWindow(QGraphicsView):
         self.framerate = framerate
         self.mouse_press = mouse_press
         self.mouse_release = mouse_release
-        self.scene = QGraphicsScene(0, 0, self.x, self.y)
-        self.scene.setSceneRect(0, 0, self.x, self.y)
-        self.view = self.setScene(self.scene)
-        self.setRenderHint(QPainter.Antialiasing)
+        self.mx = None
+        self.my = None
+        self.mouse_pressed = None
+
         self.r = 255
         self.g = 255
         self.b = 255
         self.color = QColor()
         self.brush = QColor(self.r, self.g, self.b, 255)
         self.pen = QColor(self.r, self.g, self.b, 255)
+
         self.list_of_bodies = []
         self.list_of_stars = []
-        self.mx = None
-        self.my = None
-        self.mouse_pressed = None
+
+        self.factor = 1.2
+        self.scene = QGraphicsScene(0, 0, self.x, self.y)
+        self.view = QGraphicsView(self.scene)
+        self.view.setRenderHint(QPainter.Antialiasing)
+        self.view.setViewportMargins(0, 0, 0, 0)
+        self.setCentralWidget(self.view)
+        
         self.timer = QTimer()
         self.timer.timeout.connect(self.rendering)
         self.timer.start(int(950 / self.framerate))
-        self.setViewportMargins(0, 0, 0, 0)
+
+        self.background = Background()
+        self.background.setFixedSize(WINDOW_WIDTH, WINDOW_HEIGHT)
+        self.scene.addWidget(self.background)
+        self.zoom_count = 0
+
+        QtWidgets.QShortcut("+", self.view, activated=self.zoom_in)
+        QtWidgets.QShortcut("=", self.view, activated=self.zoom_in)
+        QtWidgets.QShortcut("-", self.view, activated=self.zoom_out)
+
+    def zoom_in(self):
+        self.view.scale(self.factor, self.factor)
+        self.zoom_count = self.zoom_count - 1
+
+    def zoom_out(self):
+        inverted_factor = 1 / self.factor
+
+        current_rect = self.view.mapToScene(self.view.viewport().geometry()).boundingRect()
+        if (current_rect.width() * inverted_factor > WINDOW_WIDTH or
+            current_rect.height() * inverted_factor > WINDOW_HEIGHT):
+            return
+        
+        if self.zoom_count < 8:
+            self.view.scale(inverted_factor, inverted_factor)
+            self.zoom_count = self.zoom_count + 1
 
     def draw(self):
         self.show()
@@ -119,15 +159,16 @@ class GraphicsWindow(QGraphicsView):
         del_circle = None
         del_circle = next((i for i in self.list_of_stars if i.name == name), None)
 
-        if del_circle.ellipse.scene() is not None:
-            self.scene.removeItem(del_circle.ellipse)
+        if del_circle:
+            if del_circle.ellipse.scene() is not None:
+                self.scene.removeItem(del_circle.ellipse)
 
     def mousePressEvent(self, event: QMouseEvent):
-        self.mx = event.x()
-        self.my = event.y()
-        self.mouse_pressed = True
+        scene_pos = self.view.mapToScene(event.pos())
+        self.mx = scene_pos.x()
+        self.my = scene_pos.y()
+
         super().mousePressEvent(event)
-        
         self.mouse_press(self.mx, self.my)
 
     def mouseReleaseEvent(self, event: QMouseEvent):
@@ -181,4 +222,3 @@ def start_graphics(main, width, height, framerate, mouse_press, mouse_release):
     
     set_background()
     graphic_window.draw()
-
