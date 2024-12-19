@@ -1,6 +1,7 @@
 from draw_library import *
 from system import System
 from body import Body
+from starscape import Starscape
 import random
 
 MOUSE_PRESS = False
@@ -27,10 +28,8 @@ def mouse_press(mouse_x, mouse_y):
     NEW_PLANET_X = mouse_x
     NEW_PLANET_Y = mouse_y
 
-
 def mouse_release():
     return
-
 
 def create_new_planet():
     global NEW_PLANET_X, NEW_PLANET_Y, NEW_PLANET_COUNT, MOUSE_PRESS, new_planet_name
@@ -62,18 +61,17 @@ def create_new_planet():
     NEW_PLANET_COUNT = NEW_PLANET_COUNT + 1
     solar.body_list.append(new_planet)
 
-
 def main():
     global MOUSE_PRESS
 
     solar.draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, PIXELS_PER_METER)
     solar.update(TIMESTEP * TIME_SCALE)
 
+    starscape.maintain_list()
 
     if MOUSE_PRESS:
         create_new_planet()
         MOUSE_PRESS = False
-
 
 sun = Body("sun", 1.98892e30, 0, 0, 0, 0, 24, 255, 255, 0)
 mercury = Body("mercury", 0.33e24, -57.9e9, 0, 0, 47890, 4, 0.349 * 255, 0.129 * 255, 0.086 * 255)
@@ -83,6 +81,7 @@ mars = Body("mars", 0.642e24,-227.9e9, 0, 0, 24140, 4, 255, 0, 0)
 
 planet_list = [sun, mercury, venus, earth, mars]
 solar = System(planet_list)
+starscape = Starscape()
 
 start_graphics(main, framerate=FRAMERATE, width=WINDOW_WIDTH, height=WINDOW_HEIGHT,
                mouse_press=mouse_press, mouse_release=mouse_release)

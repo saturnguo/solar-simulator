@@ -3,6 +3,7 @@ from draw_library import *
 class Body:
     def __init__(self, name, mass, x, y, v_x, v_y,
                  pixel_radius, r, g, b):
+        self.type = "body"
         self.name = name
         self.mass = mass
         self.x = x
@@ -28,4 +29,4 @@ class Body:
         x_position = cx + (self.x * pixels_per_meter)
         y_position = cy + (self.y * pixels_per_meter)
 
-        draw_circle(self.name, x_position, y_position, self.pixel_radius)
+        draw_circle(self.type, self.name, x_position, y_position, self.pixel_radius)

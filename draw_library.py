@@ -24,7 +24,8 @@ class GraphicsWindow(QGraphicsView):
         self.color = QColor()
         self.brush = QColor(self.r, self.g, self.b, 255)
         self.pen = QColor(self.r, self.g, self.b, 255)
-        self.list_of_circles = []
+        self.list_of_bodies = []
+        self.list_of_stars = []
         self.mx = None
         self.my = None
         self.mouse_pressed = None
@@ -38,7 +39,7 @@ class GraphicsWindow(QGraphicsView):
         app.exec_()
 
     def rendering(self):
-        for i in self.list_of_circles:
+        for i in self.list_of_bodies:
             i.draw()
 
         self.update()
@@ -69,26 +70,57 @@ class GraphicsWindow(QGraphicsView):
 
         self.scene.addItem(rect)
 
-    def draw_circle(self, name, x, y, radius):
-        existing_circle = next((c for c in self.list_of_circles if c.name == name), None)
-        
-        if existing_circle:
-            existing_circle.x = x
-            existing_circle.y = y
-            existing_circle.radius = radius
+    def draw_circle(self, type, name, x, y, radius):
+        if type == "body":
+            existing_body = None
+            existing_body = next((i for i in self.list_of_bodies if i.name == name), None)
+            
+            if existing_body:
+                existing_body.x = x
+                existing_body.y = y
+                existing_body.radius = radius
 
-            existing_circle.ellipse.setRect(0, 0, existing_circle.diameter, existing_circle.diameter)
-            existing_circle.ellipse.setPos(x - radius, y - radius)
+                existing_body.ellipse.setRect(0, 0, existing_body.diameter, existing_body.diameter)
+                existing_body.ellipse.setPos(x - radius, y - radius)
 
-        if not existing_circle:
-            new_object = Circle(x, y, radius, name)
+            if not existing_body:
+                new_object = Circle(x, y, radius, name)
 
-            new_object.ellipse.setBrush(self.brush)
-            new_object.ellipse.setPen(self.pen)
+                new_object.ellipse.setBrush(self.brush)
+                new_object.ellipse.setPen(self.pen)
+                new_object.ellipse.setZValue(5)
 
-            self.list_of_circles.append(new_object)
-            self.scene.addItem(new_object.ellipse)
-            new_object.draw()
+                self.list_of_bodies.append(new_object)
+                self.scene.addItem(new_object.ellipse)
+                new_object.draw()
+            
+        if type == "star":
+            existing_star = None
+            existing_star = next((i for i in self.list_of_stars if i.name == name), None)
+
+            if existing_star:
+                existing_star.x = x
+                existing_star.y = y
+                
+                existing_star.ellipse.setPos(x - radius, y - radius)
+            
+            if not existing_star:
+                new_object = Circle(x, y, radius, name)
+
+                new_object.ellipse.setBrush(self.brush)
+                new_object.ellipse.setPen(self.pen)
+                new_object.ellipse.setZValue(1)
+
+                self.list_of_stars.append(new_object)
+                self.scene.addItem(new_object.ellipse)
+                new_object.draw()
+    
+    def delete_circle(self, name):
+        del_circle = None
+        del_circle = next((i for i in self.list_of_stars if i.name == name), None)
+
+        if del_circle.ellipse.scene() is not None:
+            self.scene.removeItem(del_circle.ellipse)
 
     def mousePressEvent(self, event: QMouseEvent):
         self.mx = event.x()
@@ -125,13 +157,16 @@ def set_fill(r, g, b):
 def set_line(r, g, b):
     graphic_window.set_line(r, g, b)
 
-def draw_circle(name, x, y, r):
-    graphic_window.draw_circle(name, x, y, r)
+def draw_circle(type, name, x, y, r):
+    graphic_window.draw_circle(type, name, x, y, r)
 
 def mouse_press():
     if graphic_window.mouse_pressed:
         print(graphic_window.mx)
         print(graphic_window.my)
+
+def delete_circle(name):
+    graphic_window.delete_circle(name)
 
 def set_background():
     set_fill(0, 0, 0)
