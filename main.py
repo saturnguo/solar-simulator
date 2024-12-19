@@ -71,7 +71,7 @@ def main():
         MOUSE_PRESS = False
 
 sun = Body("sun", 1.98892e30, 0, 0, 0, 0, 32, 255, 255, 0)
-mercury = Body("mercury", 0.33e24, -64.9e9, 0, 0, 47890, 4, 89, 35, 25)
+mercury = Body("mercury", 0.33e24, -65.9e9, 0, 0, 47890, 4, 89, 35, 25)
 venus = Body("venus", 4.87e24, -108.2e9, 0, 0, 35040, 5.5, 0, 255, 0)
 earth = Body("earth", 5.97e24, -149.6e9, 0, 0, 29790, 6, 0, 0, 255)
 mars = Body("mars", 0.642e24, -227.9e9, 0, 0, 24140, 4, 255, 0, 0)
