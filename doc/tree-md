@@ -1,0 +1,37 @@
+# Project tree
+
+.
+├── ./sol_library.so
+├── ./solcpp
+│   ├── ./solcpp/sol_operations.cpp
+│   ├── ./solcpp/sol_library.o
+│   └── ./solcpp/sol_library.h
+├── ./__pycache__
+│   ├── ./__pycache__/body.cpython-313.pyc
+│   ├── ./__pycache__/draw_library.cpython-313.pyc
+│   ├── ./__pycache__/sollib_wrapper.cpython-313.pyc
+│   └── ./__pycache__/system.cpython-313.pyc
+├── ./src
+│   ├── ./src/body.py
+│   ├── ./src/draw_library.py
+│   ├── ./src/main.py
+│   ├── ./src/starscape.py
+│   ├── ./src/system.py
+│   ├── ./src/sollib_wrapper.py
+│   ├── ./src/__pycache__
+│   │   ├── ./src/__pycache__/body.cpython-313.pyc
+│   │   ├── ./src/__pycache__/draw_library.cpython-313.pyc
+│   │   ├── ./src/__pycache__/starscape.cpython-313.pyc
+│   │   ├── ./src/__pycache__/system.cpython-313.pyc
+│   │   ├── ./src/__pycache__/sollib_wrapper.cpython-313.pyc
+│   │   └── ./src/__pycache__/star.cpython-313.pyc
+│   └── ./src/star.py
+├── ./dist
+│   └── ./dist/dist
+│       ├── ./dist/dist/main
+│       └── ./dist/dist/main.spec
+├── ./doc
+│   ├── ./doc/requirements.txt
+│   ├── ./doc/tree-md
+│   └── ./doc/demo.mov
+└── ./README.md    

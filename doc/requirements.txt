@@ -1,0 +1,11 @@
+packaging==24.2
+pybind11==2.13.6
+PyQt3D==5.15.6
+PyQt5==5.15.10
+PyQt5_sip==12.13.0
+PyQtChart==5.15.6
+PyQtDataVisualization==5.15.5
+PyQtNetworkAuth==5.15.5
+PyQtPurchasing==5.15.5
+PyQtWebEngine==5.15.6
+wheel @ file:///opt/homebrew/Cellar/python%403.13/3.13.1/libexec/wheel-0.45.1-py3-none-any.whl#sha256=da46333d5dcbde6e20cf7e2f8fff9e9ce76e8c94dc4afd6fb95fc4bc2745fb5e
