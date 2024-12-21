@@ -1,4 +1,5 @@
 from body import Body
+from sollib_wrapper import compute_acceleration
 import math
 
 G = 6.67384e-11
@@ -8,28 +9,16 @@ class System:
         self.body_list = body_list
 
     def compute_acceleration(self, n):
-        ax = 0
-        ay = 0
+        n_body = self.body_list[n]
+        i_bodies = [m for i, m in enumerate(self.body_list) if i != n]
 
-        for i in range(len(self.body_list)):
+        i_x = [i.x for i in i_bodies]
+        i_y = [i.y for i in i_bodies]
+        i_mass = [i.mass for i in i_bodies]
 
-            if i != n:
-
-                x_distance = self.body_list[i].x - self.body_list[n].x
-                y_distance = self.body_list[i].y - self.body_list[n].y
-                distance = math.sqrt(x_distance * x_distance + y_distance * y_distance)
-
-                a = G * (self.body_list[i].mass / (distance * distance))
-
-                ax = ax + a * (x_distance/distance)
-                ay = ay + a * (y_distance/distance)
+        ax, ay = compute_acceleration(n_body.x, n_body.y, i_mass, i_x, i_y)
 
         return ax, ay
-
-    def large(self):
-        for i in range(len(self.body_list)):
-            if i != 0:
-                self.body_list[i].grow_larger()
    
     def update(self, timestep):
         for i in range(len(self.body_list)):

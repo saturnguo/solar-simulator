@@ -55,7 +55,7 @@ class GraphicsWindow(QtWidgets.QMainWindow):
         self.zoom_count = 0
 
         QtWidgets.QShortcut("+", self.view, activated=self.zoom_in)
-        QtWidgets.QShortcut("=", self.view, activated=self.zoom_in)
+        QtWidgets.QShortcut("=", self.view, activated=self.zoom_in)  #because most people try to press + without shift first!
         QtWidgets.QShortcut("-", self.view, activated=self.zoom_out)
 
     def zoom_in(self):
@@ -70,7 +70,7 @@ class GraphicsWindow(QtWidgets.QMainWindow):
             current_rect.height() * inverted_factor > WINDOW_HEIGHT):
             return
         
-        if self.zoom_count < 8:
+        if self.zoom_count < 8:  #hacky way to set zoom limit.
             self.view.scale(inverted_factor, inverted_factor)
             self.zoom_count = self.zoom_count + 1
 
@@ -112,8 +112,9 @@ class GraphicsWindow(QtWidgets.QMainWindow):
 
     def draw_circle(self, type, name, x, y, radius):
         if type == "body":
-            existing_body = None
-            existing_body = next((i for i in self.list_of_bodies if i.name == name), None)
+            existing_body = None #defined as None to avoid error.
+            existing_body = next((i for i in self.list_of_bodies if i.name == name), None)  #inefficient, but makes it so that ellipses arent continually 
+                                                                                            #created instead of being updated.
             
             if existing_body:
                 existing_body.x = x
@@ -190,7 +191,7 @@ class Circle:
 
 
 app = QApplication(sys.argv)
-graphic_window = None
+graphic_window = None  #again, to avoid error
 
 def set_fill(r, g, b):
     graphic_window.set_fill(r, g, b)

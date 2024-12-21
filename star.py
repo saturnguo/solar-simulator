@@ -1,4 +1,4 @@
-from draw_library import *
+from draw_library import set_fill, draw_circle, delete_circle
 
 class Star:
     def __init__(self, x, y, name):

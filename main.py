@@ -1,4 +1,4 @@
-from draw_library import *
+from draw_library import start_graphics
 from system import System
 from body import Body
 from starscape import Starscape, WINDOW_WIDTH, WINDOW_HEIGHT
@@ -17,7 +17,6 @@ PIXELS_PER_METER = 7 / 1e10
 FRAMERATE = 30
 TIMESTEP = 1.0 / FRAMERATE
 
-
 def mouse_press(mouse_x, mouse_y):
     global MOUSE_PRESS, MOUSE_PRESS_TWO, NEW_PLANET_X, NEW_PLANET_Y
     MOUSE_PRESS = True
@@ -32,7 +31,7 @@ def create_new_planet():
     global NEW_PLANET_X, NEW_PLANET_Y, NEW_PLANET_COUNT, MOUSE_PRESS, new_planet_name
 
     new_planet = NEW_PLANET_COUNT
-    new_planet_name = new_planet_name + "x"
+    new_planet_name = new_planet_name + "x"  #shoehorned way to allow new planet creation without breaking the list of circles.
     x = (NEW_PLANET_X - WINDOW_WIDTH / 2) / PIXELS_PER_METER
     y = (NEW_PLANET_Y - WINDOW_HEIGHT / 2) / PIXELS_PER_METER
     v_x = 0
