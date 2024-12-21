@@ -31,7 +31,7 @@ ensure you have the following installed on your system: Python 3.8+, PyQt5
    python src/main.py
    ```
 
-alternatively, skip the setup process by downloading the prebuilt .exe executable from the dist folder and running it directly. python dependencies still required.
+alternatively, skip the setup process by downloading the prebuilt .exe executable from the dist folder and running it directly. python dependencies still required, mac only.
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
