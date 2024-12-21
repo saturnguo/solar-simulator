@@ -35,4 +35,4 @@ alternatively, skip the setup process by downloading the prebuilt .exe executabl
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
-* rudimentary project logic credit given to the Dartmouth CS department. 
+rudimentary project logic credit given to the Dartmouth CS department. 
