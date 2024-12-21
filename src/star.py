@@ -6,7 +6,7 @@ class Star:
         self.x = x
         self.y = y
         self.name = name
-        self.pixel_radius = 1.25
+        self.pixel_radius = 1.6
         self.r = 255
         self.g = 255
         self.b = 255
